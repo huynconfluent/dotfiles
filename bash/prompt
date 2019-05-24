@@ -1,0 +1,53 @@
+#                                  _
+#  _ __  _ __ ___  _ __ ___  _ __ | |_
+# | '_ \| '__/ _ \| '_ ` _ \| '_ \| __|
+# | |_) | | | (_) | | | | | | |_) | |_
+# | .__/|_|  \___/|_| |_| |_| .__/ \__|
+# |_|                       |_|
+
+function buildPrompt {
+
+    local __arrow="→"
+    local __git_branch=""
+    local __display_git_branch=""
+    local __color_prompt=""
+    local __git_changes=""
+    local __reset="$(tput sgr0)"
+    local __red="$(tput setaf 1)"
+    local __green="$(tput setaf 2)"
+
+
+    # check for color
+    case "$TERM" in
+        xterm-color|*-256color) __color_prompt=yes;;
+    esac
+
+    # check if git exists
+    if [ ! -z "$(which git)" ]; then
+        # get git branch
+        __git_branch="$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/*\(.*\)/\1/' | xargs)"
+        # verify if __git_branch is not empty
+        if [ -n "$__git_branch" ]; then
+            if [ "${__color_prompt}" == "yes" ]; then
+                __git_branch="${__green}${__git_branch}${__reset}"
+            fi
+            # encapsulate with parentheses
+            __display_git_branch=" (${__git_branch})"
+
+            # check for number of uncommented changes
+            __git_changes="$(git status --short | awk '{ print $1 }' | egrep -ic 'M')"
+            if [ "$__git_changes" -ne 0 ]; then
+                __git_changes=" $__git_changes uncommitted changes"
+            else
+                __git_changes=""
+            fi
+        fi
+
+    fi
+
+    # build PS1
+    PS1="\w$__display_git_branch$__git_changes\n\\$ $__arrow "
+
+    unset color_prompt
+}
+export PROMPT_COMMAND=buildPrompt

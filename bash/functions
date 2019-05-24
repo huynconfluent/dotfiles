@@ -1,0 +1,46 @@
+#   __                  _   _
+#  / _|_   _ _ __   ___| |_(_) ___  _ __  ___
+# | |_| | | | '_ \ / __| __| |/ _ \| '_ \/ __|
+# |  _| |_| | | | | (__| |_| | (_) | | | \__ \
+# |_|  \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
+
+function checkBrew () {
+    # check if HomeBrew Exists
+    if [ ! $(which brew) ]; then
+        # brew is not installed, install it
+        
+        read -p "Homebrew is not installed, do you want to install it? (y/N): " brew_choice
+
+        case "${brew_choice}" in
+            y|Y )
+                # install homebrew
+                printf "...Instaling homebrew...\n"
+                /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+                ;;
+            n|N )
+                printf "...exiting..."
+                exit 0
+                ;;
+            * )
+                printf "Choice was invalid, please try again"
+                ;;
+        esac
+    fi
+}
+
+function updateBrew () {
+
+    if [ $(which brew) ]; then
+        # display what's outdated
+        brew outdated
+
+        # update
+        brew update
+
+        # upgrade
+        brew upgrade
+
+        # clean up
+        brew cleanup
+    fi
+}
