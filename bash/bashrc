@@ -27,5 +27,5 @@ shopt -s cmdhist
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# exports
-export EDITOR=vim
+# source exports
+source ~/dotfiles/bash/exports
