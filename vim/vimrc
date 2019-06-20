@@ -51,6 +51,7 @@ filetype indent on          " load filetype-specific indent files
 
 if exists ("+title")
     set title
+    set titleold=
 endif
 
 " Return to last edit position when opening files. *(You want this!)
