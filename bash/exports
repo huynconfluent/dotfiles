@@ -8,6 +8,9 @@
 
 export EDITOR=vim
 
+# GREP
+export GREP_OPTIONS='--color=always'
+export GREP_COLOR='1;32;40'
 
 # for OpenSSL on Mac
 export PATH=/usr/local/opt/openssl/bin:$PATH
