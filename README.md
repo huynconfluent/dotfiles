@@ -1,3 +1,6 @@
+# DEPRECATED
+Use [https://github.com/huynconfluent/.dotfiles](https://github.com/huynconfluent/.dotfiles)
+
 # Huy Nguyen's dotfiles
 Dotfiles for Work Mac OS Laptop
 
